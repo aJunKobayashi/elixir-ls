@@ -519,11 +519,13 @@ defmodule ElixirLS.Debugger.Server do
   end
 
   defp interpret_modules_in(path, exclude_modules) do
+    IO.puts("importing...")
     path
     |> Path.join("**/*.beam")
     |> Path.wildcard()
     |> Enum.map(&(Path.basename(&1, ".beam") |> String.to_atom()))
     |> Enum.filter(&interpretable?(&1, exclude_modules))
+    |> IO.inspect
     |> Enum.map(&:int.ni(&1))
   end
 
