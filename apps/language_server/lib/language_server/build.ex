@@ -183,25 +183,25 @@ defmodule ElixirLS.LanguageServer.Build do
   end
 
   defp fetch_deps do
-    missing_deps =
-      Mix.Dep.load_on_environment([])
-      |> Enum.filter(fn %Mix.Dep{status: status} ->
-        case status do
-          {:unavailable, _} -> true
-          {:nomatchvsn, _} -> true
-          _ -> false
-        end
-      end)
-      |> Enum.map(fn %Mix.Dep{app: app, requirement: requirement} -> "#{app} #{requirement}" end)
+    # missing_deps =
+    #   Mix.Dep.load_on_environment([])
+    #   |> Enum.filter(fn %Mix.Dep{status: status} ->
+    #     case status do
+    #       {:unavailable, _} -> true
+    #       {:nomatchvsn, _} -> true
+    #       _ -> false
+    #     end
+    #   end)
+    #   |> Enum.map(fn %Mix.Dep{app: app, requirement: requirement} -> "#{app} #{requirement}" end)
 
-    if missing_deps != [] do
-      JsonRpc.show_message(
-        :info,
-        "Fetching #{Enum.count(missing_deps)} deps: #{Enum.join(missing_deps, ", ")}"
-      )
+    # if missing_deps != [] do
+    #   JsonRpc.show_message(
+    #     :info,
+    #     "Fetching #{Enum.count(missing_deps)} deps: #{Enum.join(missing_deps, ", ")}"
+    #   )
 
-      Mix.Task.run("deps.get")
-    end
+    #   Mix.Task.run("deps.get")
+    # end
 
     :ok
   end
